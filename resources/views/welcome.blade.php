@@ -1,4 +1,4 @@
-<x-layouts.main title="Home" description="Welcome to your home">
+<x-layouts.main title="Dashboard" description="Your Dashboard">
     @auth
     <section class="max-w-7xl mx-auto px-4">
         <header class="flex justify-between items-center py-5">
@@ -23,9 +23,17 @@
                 <label>Content</label>
                 <textarea name='content' class="p-2 border border-neutral-200 rounded-xl resize-y min-h-24" type="text" placeholder="Enter your content here..." ></textarea>
             </div>
+            <div class="flex flex-col gap-2">
+                <label>Select Category</label>
+                <select name='category' class="p-2 border border-neutral-200 rounded-xl">
+                    @foreach ($categories as $category )
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <button class="px-4 py-2 bg-orange-600 text-white font-medium w-fit rounded-2xl">Create Blog</button>
             </form>
-
             
             <section class="w-2/3">
                 <h2 class="text-xl font-bold mb-5">List Blog</h2>
@@ -38,52 +46,9 @@
                 @else
                     <p>Empty List</p>
                 @endif    
-
             </section>
         </section>
-
     </section>
-       
-    @else
-    <section class="grid grid-cols-2 max-w-7xl mx-auto py-10 gap-10">
-        {{-- REGISTER --}}
-        <section class=" flex flex-col gap-10">
-            <h1 class="text-2xl font-bold">Register Here</h1>
-            <form action="/register" method='post' class="flex flex-col gap-5">
-                @csrf
-                <div class="flex flex-col gap-2">
-                    <label>Name</label>
-                    <input name='name' class="p-2 border border-neutral-200 rounded-xl" type="text" placeholder="Enter your name" />
-                </div>
-                <div class="flex flex-col gap-2">
-                    <label>Email</label>
-                    <input name='email' class="p-2 border border-neutral-200 rounded-xl" type="emaiil" placeholder="Enter your email" />
-                </div>
-                <div class="flex flex-col gap-2">
-                    <label>Password</label>
-                    <input name="password" class="p-2 border border-neutral-200 rounded-xl" type="password" placeholder="Enter your password" />
-                </div>
-                <button class="px-4 py-2 bg-orange-600 text-white font-medium w-fit rounded-2xl">Register</button>
-            </form>
-                
-        </section>
-        {{-- LOGIN --}}
-        <section class="flex flex-col gap-10">
-            <h1 class="text-2xl font-bold">Login Here</h1>
-            <form action="/login" method='post' class="flex flex-col gap-5">
-                @csrf
-                <div class="flex flex-col gap-2">
-                    <label>Email</label>
-                    <input name='login-email' class="p-2 border border-neutral-200 rounded-xl" type="emaiil" placeholder="Enter your email"  value="{{old('login-email')}}"/>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <label>Password</label>
-                    <input name="login-password" class="p-2 border border-neutral-200 rounded-xl" type="password" placeholder="Enter your password" value="{{old('login-password')}}" />
-                </div>
-                <button class="px-4 py-2 bg-orange-600 text-white font-medium w-fit rounded-2xl">Login</button>
-            </form>
-        </section>
-    </section>  
     @endauth       
 
 </x-layouts.main>

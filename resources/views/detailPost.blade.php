@@ -1,7 +1,7 @@
 <x-layouts.main :title="$post->title" :description="$post->description">
     <section class="max-w-4xl mx-auto px-10 py-10 bg-neutral-50 rounded-3xl mt-10">
         <div class="flex justify-between items-center gap-10">
-            <a href="{{url()->previous('/')}}" class="text-sm inline-block mb-4 px-3 py-1 border border-neutral-200 rounded-lg text-neutral-700 w-fit">⬅️ Back</a>
+            <a href="{{url()->previous('/dashboard')}}" class="text-sm inline-block mb-4 px-3 py-1 border border-neutral-200 rounded-lg text-neutral-700 w-fit">⬅️ Back</a>
             <div class="h-[1px] w-full border border-neutral-100"></div>
             <form action="{{route('post.deletePost',$post->id)}}" method="post">
                 @csrf

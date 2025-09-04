@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Livewire\Settings\Appearance;
@@ -8,16 +10,30 @@ use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
 // Route Page
-Route::get('/', [PostController::class,'index'])->name('home');
-Route::get('/post/{postId}',[PostController::class,'show']);
+Route::get('/',[HomeController::class,'index'])->name('home');
+
+Route::middleware(['auth','verified'])->group(function(){
+    Route::get('/dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('/post/{postId}',[PostController::class,'show'])->name('post-detail');
+});
+
+
+
+
+
+Route::get('/login',[UserController::class,'loginShow'])->name('login');
+Route::get('/register',[UserController::class,'registerShow'])->name('register');
 
 Route::post('/register',[UserController::class,'register']);
 Route::post('/logout',[UserController::class,'logout']);
 Route::post('/login',[UserController::class,'login']);
 
 // Blogpost Action
-Route::post('/create-post',[PostController::class,'createPost']);
-Route::delete('/post/{postId}',[PostController::class,'deletePost'])->name('post.deletePost');
+Route::controller(PostController::class)->group(function(){
+    Route::post('/create-post','createPost')->name('post.createPost');
+    Route::delete('/post/{postId}','deletePost')->name('post.deletePost');
+});
+
 
 
 

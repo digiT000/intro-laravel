@@ -7,10 +7,23 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use function Termwind\render;
 
 class UserController extends Controller
 {
     
+    public function loginShow(){
+        if(Auth::check()){
+            return redirect('/dashboard');
+        }
+        return view('login');
+    }
+    public function registerShow(){
+        if(Auth::check()){
+            return redirect('/dashboard');
+        }
+        return view('/register');
+    }
 
     public function register(Request $request){
 
@@ -33,7 +46,7 @@ class UserController extends Controller
     public function logout(Request $request){
         Auth::logout();
 
-        return redirect('/');
+        return redirect('/login');
     }
 
     public function login(Request $request){
@@ -49,7 +62,7 @@ class UserController extends Controller
 
         if($validLogin){        
             $request->session()->regenerate();
-            return redirect('/');
+            return redirect('/dashboard');
         }else{
             return back()->withInput($request->only('login-email'));
         }

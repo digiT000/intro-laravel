@@ -14,7 +14,17 @@ class Blogpost extends Model
         'title',
         'content',
         'description',
-        'user_id'
+        'user_id',
+        'category_id'
     ];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    // 1 Post belong to 1 user only
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
     
 }

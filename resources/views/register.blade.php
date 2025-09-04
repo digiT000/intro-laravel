@@ -1,0 +1,22 @@
+<x-layouts.main title="Register" description="Register here">
+    <section class=" flex flex-col gap-10 max-w-3xl mx-auto py-10">
+        <h1 class="text-2xl font-bold">Register Here</h1>
+        <form action="/register" method='post' class="flex flex-col gap-5">
+            @csrf
+            <div class="flex flex-col gap-2">
+                <label>Name</label>
+                <input name='name' class="p-2 border border-neutral-200 rounded-xl" type="text" placeholder="Enter your name" />
+            </div>
+            <div class="flex flex-col gap-2">
+                <label>Email</label>
+                <input name='email' class="p-2 border border-neutral-200 rounded-xl" type="emaiil" placeholder="Enter your email" />
+            </div>
+            <div class="flex flex-col gap-2">
+                <label>Password</label>
+                <input name="password" class="p-2 border border-neutral-200 rounded-xl" type="password" placeholder="Enter your password" />
+            </div>
+            <button class="px-4 py-2 bg-orange-600 text-white font-medium w-fit rounded-2xl">Register</button>
+            <p class="text-sm text-neutral-600">Already have an account? <span><a class="text-orange-600 underline" href="{{route('login')}}">Login Now</a></span></p>
+        </form>   
+    </section>
+</x-layouts.main>

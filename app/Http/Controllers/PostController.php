@@ -9,20 +9,6 @@ use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
 
-    public function index(){
-        if(!isset(Auth::user()->id)){
-            return view(view: 'welcome');
-        }
-
-        $userId = Auth::user()->id;
-        
-        $userPosts = Blogpost::where('user_id',$userId)->latest()->get();
-        return view('welcome',[
-                'posts'=>$userPosts
-            ]);
-
-    }
-
     public function show($postId = null){
 
         $userId = Auth::user()->id;
@@ -43,19 +29,21 @@ class PostController extends Controller
         $incomingField = $request->validate([
             'title'=>['required','min:5'],
             "description"=>['required','max:200'],
-            "content"=>['required','max:7000']
+            "content"=>['required','max:7000'],
+            "category"=>['required']
         ]);
 
         $data = [
             'title'=>$incomingField['title'],
             'description'=>$incomingField['description'],
             'content'=>$incomingField['content'],
-            'user_id'=>Auth::user()->id
+            'user_id'=>Auth::user()->id,
+            'category_id'=>$incomingField['category']
         ];
 
         Blogpost::create($data);
 
-        return redirect('/');
+        return redirect('/dashboard');
     }
 
     public function deletePost(Request $request,string $us){
